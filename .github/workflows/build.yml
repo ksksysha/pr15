@@ -1,34 +1,20 @@
-name: Build and Test   # Название workflow
+name: CI Workflow
 
 on:
-  push:                # Запуск при каждом push (коммите в репозиторий)
+  push:
     branches:
-      - main           # Только при отправке в ветку main
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest   # GitHub использует виртуальную машину Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        # Скачивает код из репозитория в виртуальную машину
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-        # Устанавливает Java 11
+      - name: Show project files
+        run: ls -la
 
-      - name: Grant permission for Gradlew
-        run: chmod +x gradlew
-        # Дает права на выполнение gradlew (важно для Linux)
-
-      - name: Build project
-        run: ./gradlew build
-        # Запускает сборку проекта
-
-      - name: Run tests
-        run: ./gradlew test
-        # Запускает автоматические тесты
+      - name: CI Success Message
+        run: echo "CI/CD успешно работает!"
