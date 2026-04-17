@@ -1,0 +1,22 @@
+name: Run Tests
+
+# Workflow запускается при каждом пуше в репозиторий
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r file-sharing-platform/requirements.txt || echo "No requirements"
+
+      - name: Run tests
+        run: PYTHONPATH=file-sharing-platform python3 -m unittest discover -s file-sharing-platform/tests -p "test_*.py"
